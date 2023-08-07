@@ -5,6 +5,7 @@
   - [Process API](#process-api)
   - [How are process created?](#how-are-process-created)
   - [What are the different states of a running process?](#what-are-the-different-states-of-a-running-process)
+  - [System-level data structures needed to manage processes](#system-level-data-structures-needed-to-manage-processes)
 
 ## Important Terms and Concepts
 
@@ -74,7 +75,6 @@ The following is a table that shows how two processes might transition through s
 | 7    | -         | Running   |                       |
 | 8    | -         | Running   | Process B is now done |
 
-
 The following is a table that shows how two processes might transition through some of the states (CPU and I/O).
 
 | Time | Process A | Process B | Notes                    |
@@ -89,4 +89,20 @@ The following is a table that shows how two processes might transition through s
 | 8    | Ready     | Running   | Process B is now done    |
 | 9    | Running   | -         |                          |
 | 10   | Running   | -         | Process A is now done    |
+
+When the process A initiates I/O, the OS assumes that the process A is not running, so it shifts over to process B. Once the I/O is done, the process B finishes and the context switches back to process A. 
+
+It's worth noting in the second table how the OS decides not to switch back to running the process A once it's I/O operations are done. Is this a good idea?
+
+## System-level data structures needed to manage processes
+
+The OS most likely will contain some form of a *process list* to keep track of all processes that are running. The process list is a data structure that contains information about each process. The following is a list of information that is likely to be stored in the process list:
+- **Process ID**: A unique identifier for the process.
+- **Process state**: The state of the process (e.g., running, ready, blocked).
+- **Program counter**: The address of the next instruction to be executed.
+- **CPU registers**: The values of the registers.
+
+The **register context** will store the contents of a stopped process's registers. The register context is used to restore the state of the process when it is scheduled again via a context switch that will be covered later.
+
+A process could be placed in a **final state** where it has stopped running but has not yet been removed from the process list. The final state is used to keep track of the process until the parent process has a chance to read its exit status. The final state is also known as the *zombie state*. 
 
