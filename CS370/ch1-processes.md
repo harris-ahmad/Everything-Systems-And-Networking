@@ -6,6 +6,8 @@
   - [How are process created?](#how-are-process-created)
   - [What are the different states of a running process?](#what-are-the-different-states-of-a-running-process)
   - [System-level data structures needed to manage processes](#system-level-data-structures-needed-to-manage-processes)
+  - [Digging deep into the Process API](#digging-deep-into-the-process-api)
+    - [The `fork()` System Call](#the-fork-system-call)
 
 ## Important Terms and Concepts
 
@@ -105,4 +107,32 @@ The OS most likely will contain some form of a *process list* to keep track of a
 The **register context** will store the contents of a stopped process's registers. The register context is used to restore the state of the process when it is scheduled again via a context switch that will be covered later.
 
 A process could be placed in a **final state** where it has stopped running but has not yet been removed from the process list. The final state is used to keep track of the process until the parent process has a chance to read its exit status. The final state is also known as the *zombie state*. 
+
+## Digging deep into the Process API
+
+In this section, we will cover the practical aspects of processes. UNIX presents one of the most interesting ways of creating a new process: `fork()` and `exec()` system calls. A third routine `wait()` is used to wait for a child process to finish.
+
+### The `fork()` System Call
+
+> A system call used to create processes.
+
+The following is a code snippet demonstrating the use of `fork()`:
+
+```c
+#include <stdio.h>
+
+int main() {
+    int pid = fork();
+
+    if (pid < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        return 1;
+    } else if (pid == 0) {
+        printf("Hello from the child process!\n");
+    } else {
+        printf("Hello from the parent process!\n");
+    }
+    return 0;
+}
+```
 
