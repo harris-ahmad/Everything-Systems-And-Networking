@@ -3,6 +3,8 @@
 - [Chapter 4 - Processes](#chapter-4---processes)
   - [Important Terms and Concepts](#important-terms-and-concepts)
   - [Process API](#process-api)
+  - [How are process created?](#how-are-process-created)
+  - [What are the different states of a running process?](#what-are-the-different-states-of-a-running-process)
 
 ## Important Terms and Concepts
 
@@ -29,3 +31,28 @@ the execution of the process.
 
 ## Process API
 
+The following are the functions that are used to create and manage processes.
+
+- **Create**: An operating system must include a mechanism to create a new process. For example, opening a new program in Windows or Linux creates a new process.
+- **Destory**: Similar to opening a new process, there should be a way to forcefully forfeit a process. This is done by the `kill` command in Linux.
+- **Wait**: A process may need to wait for another process to finish before it can continue. This is done by the `wait` command in Linux.
+- **Status**: A process may need to know the status of another process. This is done by the `status` command in Linux.
+
+## How are process created?
+
+The first thing that the OS must do is to load its code and any static data into the address space (memory) of the process. Programs reside in the persistance storage as executables. Now, modern OS load the programs into the memory *lazily* meaning that they only load the parts of the program that are needed. To understand how *lazy loading* works, it's important to dig deeper into concepts such as **paging** and **swapping** - we will get to those later.
+
+Before running a process, the OS allocates some memory to the run-time stack. C programs depend on the stack for local variables, function parameters, and return addresses. 
+
+The OS will also likely initialize the stack with arguments; specifically, it will fill in the parameters to the `main()` function, i.e., `argc` and the `argv` array.
+
+The OS will also initialize the heap. The heap is used for dynamic memory allocation. The OS will also initialize the heap with the `malloc()` function. The allocated memory is explicitly freed by the `free()` function.
+
+The OS will also initialize the file descriptors. The file descriptors are used to read and write to files. There are descriptors for standard input, standard output, and standard error. The standard input is used to read from the keyboard. The standard output is used to write to the screen. The standard error is used to write error messages to the screen.
+
+## What are the different states of a running process?
+
+In this section, we talk about the different states a running process can be in. In a simplified view, a process can be in one of the following states:
+- **Running**: The process is running on a processor meaning it's executing instructions.
+- **Ready**: The process is ready to run but is waiting for the processor to become available.
+- **Blocked**: The process is waiting for some event to occur (e.g., waiting for a file to be read from the disk).
