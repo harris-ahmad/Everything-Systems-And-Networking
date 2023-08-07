@@ -56,3 +56,37 @@ In this section, we talk about the different states a running process can be in.
 - **Running**: The process is running on a processor meaning it's executing instructions.
 - **Ready**: The process is ready to run but is waiting for the processor to become available.
 - **Blocked**: The process is waiting for some event to occur (e.g., waiting for a file to be read from the disk).
+
+**Important**:
+- Being moved from running to ready state means that the process has been preempted or descheduled.
+- Being moved from ready to running state means that the process has been scheduled or dispatched.
+
+The following is a table that shows how two processes might transition through some of the states (CPU only).
+
+| Time | Process A | Process B | Notes                 |
+| ---- | --------- | --------- | --------------------- |
+| 1    | Running   | Ready     |                       |
+| 2    | Running   | Ready     |                       |
+| 3    | Running   | Ready     |                       |
+| 4    | Running   | Ready     | Process A is now done |
+| 5    | -         | Running   |                       |
+| 6    | -         | Running   |                       |
+| 7    | -         | Running   |                       |
+| 8    | -         | Running   | Process B is now done |
+
+
+The following is a table that shows how two processes might transition through some of the states (CPU and I/O).
+
+| Time | Process A | Process B | Notes                    |
+| ---- | --------- | --------- | ------------------------ |
+| 1    | Running   | Ready     |                          |
+| 2    | Running   | Ready     |                          |
+| 3    | Running   | Ready     | Process A initiates I/O  |
+| 4    | Blocked   | Running   | Process A is now blocked |
+| 5    | Blocked   | Running   | Process B runs           |
+| 6    | Blocked   | Running   |                          |
+| 7    | Ready     | Running   | I/O done                 |
+| 8    | Ready     | Running   | Process B is now done    |
+| 9    | Running   | -         |                          |
+| 10   | Running   | -         | Process A is now done    |
+
