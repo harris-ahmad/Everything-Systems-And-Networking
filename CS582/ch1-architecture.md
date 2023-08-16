@@ -98,4 +98,9 @@ Although the layered architecure is very popular, it has some drawbacks. The mai
 Following is a diagram that shows the object-based architectural style.
 
 ![Object-based architectural style](./images/object-based-architectural-style.png)
+$$\text{Figure 1: Object-based architectural style}$$
 
+Object-based architecture is of special importance and is appreciated by system designers because of the **encapsulation** that it offers. Every object has its own state and the only way to access this state is through the operations that the object offers. This is called **information hiding**. This is a very important concept in software engineering. It is important to note that the object-based architecture is not the only way to achieve encapsulation. It is also possible to achieve encapsulation through the use of **modules**. However, modules do not offer location transparency.
+
+As with components, this means that if an object has a well-defined interface, it can easily be replaced by another object with the same interface. This separation between interfaces and objects allows us to place an interface at one machine and the object on another. The organization shown in figure [1](#object-based-architectural-style) is called a **distributed object* or a *remote object*. When a client binds to a distributed object, an implementation of the object’s interface, called a proxy, is then loaded into the client’s address space. A proxy is analogous to a so-called client stub in RPC systems.
+Don't worry if this sounds confusing. We'll be discussing RPCs in detail in the upcoming chapters.
