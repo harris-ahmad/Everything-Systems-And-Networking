@@ -4,6 +4,8 @@
   - [Architectural Styles](#architectural-styles)
     - [Layered Architecture](#layered-architecture)
       - [Layered Communication Protocols](#layered-communication-protocols)
+    - [Service-oriented Architecture](#service-oriented-architecture)
+      - [Object-based Architectural Style](#object-based-architectural-style)
 
 ## Architectural Styles
 
@@ -74,7 +76,27 @@ s.close() # close connection
 **Application Layering**
 
 Now, we will shift our focus to the logical organization of applications. Applications can be constructed from roughly three pieces:
-- Handle interaction with the user.
-- A part that operates or interacts with the database.
-- A middle part that consists of the core functionality of the application. 
+- Handle interaction with the user $\rightarrow$ The application-interface level
+- A part that operates or interacts with the database. $\rightarrow$ The processing level
+- A middle part that consists of the core functionality of the application. $\rightarrow$ The data level
+
+Out of the three layers listed above, the processing layer is the most important one. It is the layer that is responsible for a majority of compute-intensive tasks. Why? Take the example of a house-ranking application. The application-interface layer is responsible for taking the input from the user and displaying the results. The data layer is responsible for storing the data in a huge database. The processing layer is responsible for computing the ranking of the houses.
+
+**Drawbacks of Layered Architecture**
+
+Although the layered architecure is very popular, it has some drawbacks. The main drawback is that it is not very flexible. The reason is that the layers are tightly coupled. This means that a change in one layer may require changes in other layers as well. This is not desirable. Applications that have been designed as compositions of existing components without much thought about strengthening the interface between the components are particularly vulnerable to this problem. Such direct dependencies has motivated the development of the **service-oriented architecture** comprising of loosely coupled components that are independent of each other and provide their functionality (so-called *services*) through well-defined interfaces.
+
+### Service-oriented Architecture
+
+- The basic idea of a service-oriented architecture is to organize the system into services, where each service provides a set of operations to the outside world. 
+- These services are executed as separate processes (threads) and communicate with each other by exchanging messages. One type of a service-oriented arhicture is the **object-based architectural style** where the services are implemented as objects. We'll be using this to demonstrate the concept of a service-oriented architecture.
+
+#### Object-based Architectural Style
+
+- In essence, each object corresponds to what we have defined as a component, and these components are connected through a *procedure-call mechanism*.
+- In case of a distributed infrastructure, these objects may be called over the network where the calling object need not be executed on the same machine as the called object. Even the location of this object might be hidden from the calling object. This is called **location transparency**.
+
+Following is a diagram that shows the object-based architectural style.
+
+![Object-based architectural style](./images/object-based-architectural-style.png)
 
