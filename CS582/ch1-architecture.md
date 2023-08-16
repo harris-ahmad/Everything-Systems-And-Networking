@@ -3,7 +3,6 @@
 - [Architecture of a Distributed System](#architecture-of-a-distributed-system)
   - [Architectural Styles](#architectural-styles)
     - [Layered Architecture](#layered-architecture)
-      - [Layered Communication Protocols](#layered-communication-protocols)
     - [Service-oriented Architecture](#service-oriented-architecture)
       - [Object-based Architectural Style](#object-based-architectural-style)
 
@@ -31,7 +30,7 @@ Now, let us look at each of these architectural styles in detail.
 - The components are organized in a way that the layer above uses the services of the layer below. In other words layer $L_{A}$ can make a **downcall** to layer $L_{B}$. In some cases, the layer $L_{B}$ may also be able to make an **upcall** to layer $L_{A}$.
 - Since making an upcall is an exception, I'd like to provide an example. When an operating system signals the occurrence of an event, to which end it calls a user-defined operation for which an application had previously passed a reference (typically refered to as a **handle**).
   
-#### Layered Communication Protocols
+**Layered Communication Protocols**
 
 - This section provides only a global picture of how the **communication-protocol stacks work** since a detailed discussion will be in the upcoming chapters. 
 - Each layer in a layered architecture offers an interface with well-defined functions that can be called. 
