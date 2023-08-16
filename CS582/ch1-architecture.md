@@ -31,4 +31,42 @@ Now, let us look at each of these architectural styles in detail.
   
 #### Layered Communication Protocols
 
-This section provides only a global picture of how the **communication-protocol stacks work** since a detailed discussion will be in the upcoming chapters. 
+- This section provides only a global picture of how the **communication-protocol stacks work** since a detailed discussion will be in the upcoming chapters. 
+- Each layer in a layered architecture offers an interface with well-defined functions that can be called. 
+- Another important concept to consider when studying communication are the **communication protocols** which describe the rules that govern the communication between two entities.
+- It is important to understand the difference between a service offered by a layer, the interface by which that service is made available, and the protocol that a layer implements
+to establish communication. 
+- To make this *distinction* clear, consider a connection-oriented service where a connection is established between two entities before they can exchange data. Such a service ensures strong reliability guarantees meaning that the data will be delivered in the order in which it was sent. An example is the **TCP** or the **Transmission Control Protocol**.
+- TCP specifies which messages are to be exchanged for establishing a connection, how to send data, and how to close a connection.
+- There are different implementations of the interfaces available depending on the Operating System and the programming language being used. 
+
+To further make this distinction clear, let us consider the following example of a simple client-server architecture involving two parties that can send and recieve data. Please note that some code has been removed for clarity.
+
+**A simple server**
+
+```python
+from socket import *
+
+s = socket(AF_INET, SOCK_STREAM) # create a socket
+(conn, addr) = s.accept() # accept a connection
+while True: # forever
+    data = conn.recv(1024) # receive data
+    if not data: break # until end of data
+    msg = data.decode()+"*" # process data
+    conn.send(msg.encode()) # send data
+conn.close() # close connection
+```
+
+**A simple client**
+
+```python
+from socket import * 
+
+s = socket(AF_INET, SOCK_STREAM) # create a socket 
+s.connect((HOST, PORT)) # connecting to the server
+msg = "Hello" # message to the server
+s.send(msg.encode()) # encode and send the message
+data = s.recv(1024) # receive data from the server
+print(data.decode()) # print the data
+s.close() # close connection
+```
