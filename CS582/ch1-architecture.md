@@ -70,3 +70,11 @@ data = s.recv(1024) # receive data from the server
 print(data.decode()) # print the data
 s.close() # close connection
 ```
+
+**Application Layering**
+
+Now, we will shift our focus to the logical organization of applications. Applications can be constructed from roughly three pieces:
+- Handle interaction with the user.
+- A part that operates or interacts with the database.
+- A middle part that consists of the core functionality of the application. 
+
